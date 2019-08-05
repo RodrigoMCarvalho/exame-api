@@ -1,4 +1,4 @@
-package br.com.escola.demo.model;
+package br.com.escola.exame.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

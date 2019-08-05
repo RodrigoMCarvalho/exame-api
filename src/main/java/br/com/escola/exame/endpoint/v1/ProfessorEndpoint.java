@@ -1,4 +1,4 @@
-package br.com.escola.demo.endpoint.v1;
+package br.com.escola.exame.endpoint.v1;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
