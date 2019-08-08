@@ -1,9 +1,9 @@
 package br.com.escola.exame.security;
 
+import br.com.escola.exame.service.ImplementsUserDetailsService;
 import static br.com.escola.exame.security.Constants.HEADER_STRING;
 import static br.com.escola.exame.security.Constants.SECRET;
 import static br.com.escola.exame.security.Constants.TOKEN_PREFIX;
-import br.com.escola.exame.service.ImplementsUserDetailsService;
 import io.jsonwebtoken.Jwts;
 import java.io.IOException;
 import javax.servlet.FilterChain;

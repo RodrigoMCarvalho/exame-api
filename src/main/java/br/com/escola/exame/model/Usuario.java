@@ -20,9 +20,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class Usuario implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-
     @NotEmpty(message = "Campo login obrigatório")
     @Column(unique = true)
     private String login;
