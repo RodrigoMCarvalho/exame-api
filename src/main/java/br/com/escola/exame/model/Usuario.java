@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -27,11 +25,8 @@ public class Usuario implements UserDetails {
     @NotEmpty(message = "Campo senha obrigatório")
     private String senha;
 
-    @ManyToMany
-    @JoinTable(name = "usuarios_roles",
-            joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "login"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "nomeRole"))
-    private List<Role> roles;
+    @OneToOne
+    private Professor professor;
 
     public Usuario(String login, String senha, Professor professor) {
         this.login = login;
@@ -41,9 +36,6 @@ public class Usuario implements UserDetails {
 
     public Usuario() {
     }
-
-    @OneToOne
-    private Professor professor;
 
     public String getLogin() {
         return login;
@@ -69,17 +61,16 @@ public class Usuario implements UserDetails {
         this.professor = professor;
     }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
+    @ManyToMany
+    @JoinTable(name = "usuarios_roles",
+            joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "login"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "nomeRole"))
+    private List<Role> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles;
+
+        return roles;
     }
 
     @Override

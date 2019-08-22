@@ -1,9 +1,7 @@
 package br.com.escola.exame.security;
 
 import br.com.escola.exame.service.ImplementsUserDetailsService;
-import static br.com.escola.exame.security.Constants.SIGN_UP_URL;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,11 +18,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
-                .and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.GET, SIGN_UP_URL).permitAll()
-                .antMatchers("/*/protected/**").hasRole("USER")
-                .antMatchers("/*/protected/**").hasRole("ADMIN")
-                .antMatchers("/*/admin/**").hasRole("ADMIN")
+                .and().csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/*/professor/**").hasRole("PROFESSOR")
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager(), userDetailsService));

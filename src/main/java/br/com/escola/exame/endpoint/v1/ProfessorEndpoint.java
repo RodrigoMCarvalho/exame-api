@@ -12,6 +12,6 @@ public class ProfessorEndpoint {
 
     @GetMapping
     public ResponseEntity<?> ola() {
-        return new ResponseEntity<>("Olá", HttpStatus.OK);
+        return new ResponseEntity<>("Olá professor", HttpStatus.OK);
     }
 }

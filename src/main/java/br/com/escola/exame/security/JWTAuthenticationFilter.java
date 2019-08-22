@@ -17,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -42,9 +43,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         ZonedDateTime expTimeUTC = ZonedDateTime.now(ZoneOffset.UTC).plus(EXPIRATION_TIME, ChronoUnit.MILLIS);
+        String username = ((User) authResult.getPrincipal()).getUsername();
 
         String token = Jwts.builder()
-                .setSubject(((Usuario) authResult.getPrincipal()).getLogin())
+                .setSubject(username)
                 .setExpiration(Date.from(expTimeUTC.toInstant()))
                 .signWith(io.jsonwebtoken.SignatureAlgorithm.HS256, SECRET)
                 .compact();
